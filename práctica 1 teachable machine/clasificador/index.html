@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clasificador de Imágenes AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- TensorFlow.js y Teachable Machine Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Clasificador de Imágenes con IA</h1>
+    <p>Red Neuronal en Local con TensorFlow.js</p>
+  </header>
+
+  <main class="main-container">
+    
+    <!-- Panel de Control y Configuración -->
+    <section class="card control-card">
+      <h2>Controles y Configuración</h2>
+      
+      <div class="control-group">
+        <button id="btn-start" class="btn btn-primary" onclick="initWebcam()">
+          <span>▶</span> Iniciar Cámara
+        </button>
+        <button id="btn-stop" class="btn btn-danger" onclick="stopWebcam()" disabled>
+          <span>⏹</span> Detener Cámara
+        </button>
+      </div>
+
+      <div class="input-group">
+        <label for="threshold-input">Umbral Mínimo de Coincidencia (%):</label>
+        <div class="slider-container">
+          <input type="range" id="threshold-input" min="1" max="100" value="75" oninput="updateThresholdLabel(this.value)">
+          <span id="threshold-value">75%</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="file-upload" class="file-label">
+          <span>📁</span> Subir imagen para calificar
+        </label>
+        <input type="file" id="file-upload" accept="image/*" onchange="classifyUploadedImage(event)">
+      </div>
+    </section>
+
+    <!-- Visualizador de Video / Imagen cargada -->
+    <section class="card display-card">
+      <h2>Vista Previa</h2>
+      <div id="webcam-container" class="media-container">
+        <!-- El canvas de la cámara se insertará aquí -->
+        <p id="placeholder-text" class="placeholder">Inicia la cámara o sube una imagen para clasificar.</p>
+        <img id="image-preview" src="#" alt="Imagen cargada" class="image-preview hidden">
+      </div>
+      <div id="custom-message" class="custom-message info">
+        Esperando acción...
+      </div>
+    </section>
+
+    <!-- Predicciones en Tiempo Real -->
+    <section class="card predictions-card">
+      <h2>Predicción Actual</h2>
+      <div id="label-container" class="label-container">
+        <!-- Barras de probabilidad dinámicas -->
+      </div>
+    </section>
+
+    <!-- Historial de Resultados -->
+    <section class="card history-card">
+      <div class="history-header">
+        <h2>Historial de Coincidencias</h2>
+        <button class="btn btn-secondary btn-sm" onclick="clearHistory()">Limpiar Historial</button>
+      </div>
+      <ul id="history-list" class="history-list">
+        <!-- Elementos del historial dinámicos -->
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Proyecto de Clasificación en Local &copy; 2026</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
